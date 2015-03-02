@@ -98,5 +98,28 @@ bubblist.controller('mainController', function($scope, Tasks, $location, $timeou
 
 	$scope.toggleEditMode = function (i){
 		$scope.taskList[i].editing = !$scope.taskList[i].editing;
+		//Begin character counter tutorial reference:
+		//Part 1: http://www.youtube.com/watch?v=13bceSHothY
+		//Part 2: http://www.youtube.com/watch?v=BqcI0N87Xzw
+		$('.edit-feedback').html(maxChars - $('.edit-box').val().length);
+		$('.edit-box').keyup(function() {
+			console.log('wut');
+			var curCharsEdit = $('.edit-box').val().length;
+			var charsRemainingEdit = maxChars - curCharsEdit;
+			$('.edit-feedback').html(charsRemainingEdit);
+		});
+		//End character counter tutorial reference
 	};
+
+	//Begin character counter tutorial reference (again):
+	//Part 1: http://www.youtube.com/watch?v=13bceSHothY
+	//Part 2: http://www.youtube.com/watch?v=BqcI0N87Xzw
+	var maxChars = 120;
+	$('.text-feedback').html(maxChars);
+	$('.task-input').keyup(function() {
+		var curChars = $('.task-input').val().length;
+		var charsRemaining = maxChars - curChars;
+		$('.text-feedback').html(charsRemaining);
+	});
+	//End character counter tutorial reference
 });

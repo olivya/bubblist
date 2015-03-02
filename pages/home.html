@@ -14,13 +14,16 @@
 				<!-- EDITING FORM: -->
 				<form ng-show="task.editing" ng-submit="toggleEditMode($index)">
 		      	<textarea rows="6"
+		      				 cols="16"
+		      				 maxlength="120"
 								 placeholder="Task"
 								 ng-model="task.task"
 								 required
 								 class="edit-box">
 					</textarea><br/>
+					<div class="edit-feedback"></div>
 					<!-- SAVE: --><button class="btn" type="submit">Save</button>
-					<!-- DELETE: --><button ng-hide="task.editing" ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
+					<!-- DELETE: --><button ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
 		      </form>
 		      <!-- END EDITING FORM -->
 			</div>
@@ -35,11 +38,15 @@
 			ng-submit="addTask()"
 			novalidate>
 
-		<textarea rows="2"
+		<textarea rows="3"
+					 cols="25"
+					 maxlength="120"
+					 class="task-input"
 					 placeholder="Task"
 					 ng-model="newTask"
 					 required>
 		</textarea><br/>
+		<div class="text-feedback"></div>
 
 		<input type="submit"
 				 value="Submit"/> 
