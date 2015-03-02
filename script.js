@@ -1,5 +1,9 @@
 var bubblist = angular.module('bubblist', ['ngRoute','ngAnimate']);
 
+//=============================================================================
+var mainControllerPublic = {};
+//=============================================================================
+
 bubblist.config(function ($routeProvider,$locationProvider) {
     $routeProvider
 
