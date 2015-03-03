@@ -15,16 +15,6 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	var space = 0;
 	var increaseSpace;
 
-	// $( ".colour-test" ).click(function() {
-	// 	if(i < $scope.colourList.length) {
-	// 		colour = $(this).css("background-color",$scope.colourList[i]);
-	// 	} else if (i === $scope.colourList.length) {
-	// 		i=0;
-	// 		colour = $(this).css("background-color",$scope.colourList[i]);
-	// 	}
-	// 	i++;
-	// });
-
 	$scope.checkForTasks = function (){
 		if ($scope.taskList.length === 0) {
 				$scope.noTasks = true;
@@ -45,6 +35,7 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	 				$(items[j]).addClass("deleted");
 	 			}
 	 		}
+	 		setTimeout($(items[j]).addClass("deletedFinal"),600);
 
 			$scope.checkForTasks();
 		}
