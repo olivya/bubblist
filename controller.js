@@ -59,7 +59,6 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 					editing:false,
 					index:i
 				});
-
 			// i = $scope.taskList.map(function(i) { return i.i; }).indexOf($scope.newTask);
 			// console.log("i "+i);
 			$scope.newTask = "";
@@ -74,13 +73,20 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		setTimeout($scope.setStyle,5);
 	};
 
+
 	$scope.setStyle = function(){
+		// setZ = $('#task'+i).css("z-index",zIndex);
+		// // console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
+		// zIndex+=10; //NEXT z
+		// console.log("setting style");
+		
 		setZ = $('#task'+i).css("z-index",zIndex);
 		// console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
 		zIndex+=10; //NEXT z
-
+		// console.log("setting z");
+		
 		increaseSpace = $('#task'+i).css("top",space+"px");
-		space += 30; //NEXT top space
+		space += 40; //NEXT top space
 
 		if(colourIndex < $scope.colourList.length) {
 				// console.log("i is "+i); console.log("colourIndex is "+colourIndex);
@@ -112,23 +118,28 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 				var task = items[i];
 				//DRAGGABILLY.JS
 				var draggie = new Draggabilly( task, {
-		    		handle: '.handle'
+		    		handle: '.task'
 		    	});
 			}
 		};
 	};
 
 	$scope.toggleEditMode = function (i){
+		// if($scope.taskList[i].editing){
+		// 	$('.edit-feedback').html(maxChars - $('.edit-box').val().length);
+		// 	console.log('chars remaining '+charsRemainingEdit);
+		// 	$('.edit-box').keyup(function() {
+		// 		var curCharsEdit = $('.edit-box').val().length;
+		// 		var charsRemainingEdit = maxChars - curCharsEdit;
+		// 		$('.edit-feedback').html(charsRemainingEdit);
+		// 	});
+		// }
+
 		$scope.taskList[i].editing = !$scope.taskList[i].editing;
 		//Begin character counter tutorial reference:
 		//Part 1: http://www.youtube.com/watch?v=13bceSHothY
 		//Part 2: http://www.youtube.com/watch?v=BqcI0N87Xzw
-		$('.edit-feedback').html(maxChars - $('.edit-box').val().length);
-		$('.edit-box').keyup(function() {
-			var curCharsEdit = $('.edit-box').val().length;
-			var charsRemainingEdit = maxChars - curCharsEdit;
-			$('.edit-feedback').html(charsRemainingEdit);
-		});
+
 		//End character counter tutorial reference
 	};
 
@@ -187,8 +198,8 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	//DOUBLE TAP to toggle edit mode:
 	mc.on("doubletap", function(ev) {
 		console.log("Double tap detected on handle with id of",ev.target.id);
+		doubleTapEdit.click(ev.target.id, ev.type);
 		holdBringForward.click(ev.target.id, ev.type);
-  		doubleTapEdit.click(ev.target.id, ev.type);
 	});
 
 	doubleTapEdit.click = function(i, eventType) {

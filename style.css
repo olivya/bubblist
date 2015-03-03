@@ -7,6 +7,7 @@ body {
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
 	box-sizing: border-box; 
 }
+
 .task-list {
 	display:inline-block;
 	position:absolute;
@@ -19,7 +20,7 @@ body {
 
 .tasky {
 	position: absolute;
-	left:10;
+	/*left:10;*/
 	/*top:10;*/
 /*	background-color:#B5FFFF;
 		-webkit-transition: background-color .5s;
@@ -33,40 +34,102 @@ body {
 	/*border:1px dashed gray;*/
 	width:130px;
 	height:130px;
-	float:left;
+	/*float:left;*/
 	text-align:center;
+
+	/*	-webkit-transition: all 1s ease-in-out;
+		-moz-transition: all 1s ease-in-out;
+		-ms-transition: all 1s ease-in-out;
+		-o-transition: all 1s ease-in-out;
+		transition: all 1s ease-in-out;*/
 }
 
-.tasky > button, form {
+.tasky > form {
   position: relative;
 }
 
-.tasky > button {
-	margin-top:95px;
-	font-size: 1em;
-	width:45px;
+.tasky > form > .buttons > button {
+	position:relative;
+	/*margin-top:95px;*/
+	font-size: 1.5em;
+	width:46%;
+	float:left;
+	/*margin-right:5px;*/
+
+	border-width:0px;
+	padding:0px;
+	color:#fff;
+	/*margin-top:5px;*/
+	border-radius:10px;
+	background-color: rgba(0,0,0,0.65);
 }
 
-.tasky > form > button {
-	font-size: 1em;
-	width:45px;
+.btn {
+	margin-right:8%;
+}
+
+.tasky > form > .buttons {
+	height:20px;
+	top:80px;
+	/*background:red;*/
+	/*height:200px;*/
+}
+
+.tasky > form > textarea {
+	resize:none;
+	width:75%;
+	font-size:1em;
+	padding:5px;
+	border-width:0px;
+	border-radius:10px;
+	background:white;
+	opacity:0.65;
+	outline:none;
+	font-family: "Ubuntu", sans-serif;
+	font-weight:300;
+	position:relative;
+	top:15px;
+	font-size:.95em;
+	line-height:1em;
+	color: rgba(0,0,0,0.5);
+
+	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	box-sizing: border-box; 	
+}
+
+.task {
+	font-family: "Ubuntu", sans-serif;
+	font-weight:300;
+	font-size:.88em;
+	line-height:1em;
+	color:#fff;
+	margin:0px;	
+	padding:0px;
+	/*background:red;*/
+
+		-webkit-transition: all 1s ease-in-out;
+		-moz-transition: all 1s ease-in-out;
+		-ms-transition: all 1s ease-in-out;
+		-o-transition: all 1s ease-in-out;
+		transition: all 1s ease-in-out;
 }
 
 .edit-box {
-	margin-top:5px;
-	font-size:1em;
+	/*margin-top:5px;*/
+	/*font-size:1em;*/
 }
 
 .edit-feedback {
-	text-align:left;
-}
-
-.edit-feedback {
-	margin-top:5px;
+	/*margin-top:5px;*/
 	text-align:right;
-	margin-right:8px;
-	margin-left:-3px;
+	/*margin-right:8px;
+	margin-left:-3px;*/
 	float:right;
+	width:100px;
+	background:lime;
+	height:200px;
+	font-size:3em;
 }
 
 .tasky.is-dragging {
@@ -87,7 +150,13 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
+  /*background:cyan;*/
+  /*background-color: rgba(0,0,0,0.3);*/
 }
+
+/*.buttons {
+	background-color: rgba(255,255,255,0.5);
+}*/
 
 .tasky .handle > div {
 	max-width:110px;
@@ -198,8 +267,7 @@ body {
 		-webkit-transition: all 0.72s ease-in-out;
 		-moz-transition: all 0.72s ease-in-out;
 		-ms-transition: all 0.72s ease-in-out;
-		-o-transition: all 0.72s ease-in-out
-		;
+		-o-transition: all 0.72s ease-in-out;
 		transition: all 0.72s ease-in-out;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
 	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
