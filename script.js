@@ -30,7 +30,8 @@ bubblist.factory("Tasks", function() {
 });
 
 bubblist.factory("Colours", function() {
-  var colourList = ['#1CBFBF','#FFCE35','#9135FF'];
+  // var colourList = ['#1CBFBF','#FFCE35','#9135FF'];
+  var colourList = ['#67E5E5','#4CD8FF','#BA82FF'];
   return {
     all: function() {
       return colourList;
