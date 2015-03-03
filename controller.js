@@ -32,7 +32,7 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	 		var items = document.querySelectorAll('.tasky');
 	 		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {
 	 			if ($scope.taskList[j] === null) { //ensure task[j] hasn't already been deleted (to avoid error)
-	 				$(items[j]).addClass("deleted");
+	 				$(items[j]).addClass("deletedFinal");
 	 			}
 	 		}
 	 		setTimeout($(items[j]).addClass("deletedFinal"),600);
