@@ -255,7 +255,6 @@ var helpButtonShifted = false;
 	};
 
 		if(!helpMenuOpen) {
-			console.log("opening");
 			$( ".help-form" ).addClass( "help-open" );
 			$( ".toggle-help-button" ).addClass( "shift-help" );
 			$( ".toggle-help-button" ).find($(".fa")).addClass('fa-spin');
@@ -269,7 +268,6 @@ var helpButtonShifted = false;
 			}}, 745);
 		}
 		else if(helpMenuOpen) {
-			console.log("closing");
 			$( ".help-form" ).removeClass( "help-open" );
 			$( ".toggle-help-button" ).removeClass( "shift-help" );
 			$( ".toggle-help-button" ).find($(".fa")).addClass('fa-spin');
