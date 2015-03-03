@@ -8,6 +8,8 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	var colour;
 	var colourIndex = 0;
 
+	var opacity;
+
 	var zIndex = 0;
 	var setZ;
 	var holdSetZ;
@@ -30,21 +32,39 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	 		$scope.taskList[i] = null;
 
 	 		var items = document.querySelectorAll('.tasky');
-	 		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {
-	 			if ($scope.taskList[j] === null) { //ensure task[j] hasn't already been deleted (to avoid error)
-	 				$(items[j]).addClass("deletedFinal");
-	 			}
-	 		}
-	 		setTimeout($(items[j]).addClass("deletedFinal"),600);
-
+		 		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {
+		 			if ($scope.taskList[j] === null) { //ensure task[j] hasn't already been deleted (to avoid error)
+		 				$(items[j]).addClass("deleted");
+		 		}
+		 	}
 			$scope.checkForTasks();
 		}
    };
 
+   //MARK TASK AS COMPLETED
+	$scope.doneTask = function (i){ //i = $index from home.html
+    	if (confirm("Mark this task as completed?") == true) {
+	 		$scope.taskList[i] = null;
+
+	 		var items = document.querySelectorAll('.tasky');
+		 		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {
+		 			if ($scope.taskList[j] === null) { //ensure task[j] hasn't already been deleted (to avoid error)
+		 				$(items[j]).addClass("deleted");
+		 		}
+		 	}
+			$scope.checkForTasks();
+		}
+   };
 	//STEP 1: ADD TASK:
-	$scope.addTask = function(){
-		if($scope.addTaskForm.$valid) {
-			$scope.taskList.push(
+	$scope.addTask = function() {
+		$( ".add-task-button" ).addClass( "button-pressed" );
+
+		setTimeout(function (){
+				$(  ".add-task-button"  ).removeClass( "button-pressed" );
+			},200);
+
+		if($scope.addTaskForm.$valid && $scope.newTask != null) {
+				$scope.taskList.push(
 				{
 					task:$scope.newTask,
 					editing:false,
@@ -52,51 +72,52 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 				});
 			// i = $scope.taskList.map(function(i) { return i.i; }).indexOf($scope.newTask);
 			// console.log("i "+i);
+
 			$scope.newTask = "";
 			$scope.checkForTasks();
 			$('.text-feedback').html(maxChars);
+
+			setTimeout($scope.toggleMenu,100);
+			setTimeout($scope.iterateTasks, 5);
+			setTimeout($scope.setStyle,5);
 		}
 		else {
-			alert("Please enter your task");
+			alert("Please enter a task!");
 		}
-		setTimeout($scope.toggleMenu,100);
-		setTimeout($scope.iterateTasks, 5);
-		setTimeout($scope.setStyle,5);
 	};
 
 
 	$scope.setStyle = function(){
-		// setZ = $('#task'+i).css("z-index",zIndex);
-		// // console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
-		// zIndex+=10; //NEXT z
-		// console.log("setting style");
+		setTimeout(function (){
+				$(  ".task"  ).removeClass( "hide" );
+			},200);
 		
+		//ensure new task is on top
 		setZ = $('#task'+i).css("z-index",zIndex);
-		// console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
 		zIndex+=10; //NEXT z
-		// console.log("setting z");
 		
+		//ensure new task is not directly over-top of previous
 		increaseSpace = $('#task'+i).css("top",space+"px");
-		space += 40; //NEXT top space
+		space += 40;
 
-		if(colourIndex < $scope.colourList.length) {
-				// console.log("i is "+i); console.log("colourIndex is "+colourIndex);
-			 	colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
-			 	colourIndex++;
-			}
-			else if (colourIndex >= $scope.colourList.length) {
-				colourIndex=0;
-				// console.log("fired reset"); console.log("i is "+i); console.log("colourIndex is "+colourIndex);
-				colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
-				colourIndex++;
-			}
-		i++;
+		//cycle through background colours
+		setTimeout(function (){
+			if(colourIndex < $scope.colourList.length) {
+				 	colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
+				 	colourIndex++;
+				}
+				else if (colourIndex >= $scope.colourList.length) {
+					colourIndex=0;
+					colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
+					colourIndex++;
+				}
+			i++
+		},100);
 	};
 
 	//STEP 2: ADD "TASKY" CLASS
 	$scope.iterateTasks = function (){
 		$( "li > div" ).addClass( "tasky" );
-		// console.log("NEXT zIndex is "+zIndex);
 		setTimeout($scope.toggleDraggability, 5);
 	};
 	
@@ -141,21 +162,23 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		}
 
 		if(!menuOpen) {
+			menuOpen = true;
+
 			$( ".add-task-form" ).addClass( "menu-open" );
 			$( ".toggle-menu-button" ).addClass( "shift-down" );
 			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
 			$( ".toggle-help-button" ).addClass( "shift-help-down" );
-			
-			menuOpen = true;
-			buttonShifted = true;
 
 			setTimeout(function () { if(buttonShifted = true) {
 				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-spin');
 				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-plus').addClass('fa-times');
 			}}, 745);
+			inProgress = false;
 		}
 
 		else if(menuOpen) {
+			menuOpen = false;
+
 			$( ".add-task-form" ).removeClass( "menu-open" );
 			$( ".toggle-menu-button" ).removeClass( "shift-down" );
 			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
@@ -166,8 +189,9 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-times').addClass('fa-plus');
 			}}, 760);
 
-			menuOpen = false;
 			buttonShifted = false;
+
+			inProgress = false;
 		}
 	};
 
@@ -214,7 +238,8 @@ var helpButtonShifted = false;
 	//====== HAMMER.JS ============================================================
 	var mc = new Hammer.Manager(document.body);
 	mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
-	mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
+	// mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
+	mc.add( new Hammer.Tap({ event: 'tap', taps:1 }) );
 
 	//DOUBLE TAP to toggle edit mode:
 	mc.on("doubletap", function(ev) {
@@ -231,8 +256,9 @@ var helpButtonShifted = false;
 	}
 
 	//HOLD for 0.75s to bring event to front:
-	mc.on("hold", function(ev) {
-		console.log("Hold detected on handle with id of",ev.target.id);
+	// mc.on("hold", function(ev) {
+	mc.on("tap", function(ev) {
+		console.log("Tap detected on handle with id of",ev.target.id);
   		holdBringForward.click(ev.target.id, ev.type);
 	});
 

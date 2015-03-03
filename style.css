@@ -20,28 +20,12 @@ body {
 
 .tasky {
 	position: absolute;
-	/*left:10;*/
-	/*top:10;*/
-/*	background-color:#B5FFFF;
-		-webkit-transition: background-color .5s;
-		-moz-transition: background-color .5s;
-		-o-transition: background-color .5s;
-		transition: background-color .5s;*/
-	/*padding-top:15px;*/
 	padding-left:10px;
 	padding-right:10px;
 	border-radius:35%;
-	/*border:1px dashed gray;*/
 	width:130px;
 	height:130px;
-	/*float:left;*/
 	text-align:center;
-
-	/*	-webkit-transition: all 1s ease-in-out;
-		-moz-transition: all 1s ease-in-out;
-		-ms-transition: all 1s ease-in-out;
-		-o-transition: all 1s ease-in-out;
-		transition: all 1s ease-in-out;*/
 }
 
 .tasky > form {
@@ -50,25 +34,38 @@ body {
 
 .tasky > form > .buttons > button {
 	position:relative;
-	font-size: 1.5em;
-	width:46%;
+	width:auto;
+	height:30px;
 	float:left;
 	border-width:0px;
-	padding:0px;
 	color:#fff;
 	border-radius:10px;
 	background-color: rgba(0,0,0,0.65);
 }
 
+.tasky > form > .buttons > .other {
+	font-size: 1.15em;
+	float:center;
+}
+
+.tasky > form > .buttons > .btn {
+	float:right;
+}
+
+.tasky > form > .buttons > .save {
+	font-family:'Lilita One',sans-serif;
+	color:#fff;
+	font-size:.9em;
+	text-transform: uppercase;
+}
+
 .btn {
-	margin-right:8%;
+	/*margin-right:2%;*/
 }
 
 .tasky > form > .buttons {
 	height:20px;
 	top:75px;
-	/*background:red;*/
-	/*height:200px;*/
 }
 
 .tasky > form > textarea {
@@ -89,8 +86,8 @@ body {
 	line-height:1em;
 	color: rgba(0,0,0,0.5);
 
-	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-	-moz-box-sizing: border-box;    /* Firefox, other Gecko */
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
 	box-sizing: border-box; 	
 }
 
@@ -102,38 +99,15 @@ body {
 	color:#fff;
 	margin:0px;	
 	padding:0px;
-	/*background:red;*/
-
-		-webkit-transition: all 1s ease-in-out;
-		-moz-transition: all 1s ease-in-out;
-		-ms-transition: all 1s ease-in-out;
-		-o-transition: all 1s ease-in-out;
-		transition: all 1s ease-in-out;
-}
-
-.edit-box {
-	/*margin-top:5px;*/
-	/*font-size:1em;*/
 }
 
 .edit-feedback {
-	/*margin-top:5px;*/
 	text-align:right;
-	/*margin-right:8px;
-	margin-left:-3px;*/
 	float:right;
 	width:100px;
 	background:lime;
 	height:200px;
 	font-size:3em;
-}
-
-.tasky.is-dragging {
-	background-color:#FFD1E6;
-		-webkit-transition: background-color .5s;
-		-moz-transition: background-color .5s;
-		-o-transition: background-color .5s;
-		transition: background-color .5s;
 }
 
 .tasky .handle:hover {
@@ -146,13 +120,7 @@ body {
   top: 0;
   width: 100%;
   height: 100%;
-  /*background:cyan;*/
-  /*background-color: rgba(0,0,0,0.3);*/
 }
-
-/*.buttons {
-	background-color: rgba(255,255,255,0.5);
-}*/
 
 .tasky .handle > div {
 	max-width:110px;
@@ -161,18 +129,9 @@ body {
 }
 
 .deleted {
-	opacity:0;
-
-	-webkit-transition: all 0.6s;
-	    -moz-transition: all 0.6s;
-	    -ms-transition: all 0.6s;
-	    -o-transition: all 0.6s;
-	    transition: all 0.6s;
-}
-
-.deletedFinal {
 	display:none;
 }
+
 
 /* ADD TASK FORM */
 .add-task-form {
@@ -183,7 +142,7 @@ body {
 	height:auto;
 	padding:5px;
 	top:20px;
-   z-index:100;
+   z-index:10000;
  	border-radius:10px;
 	    -webkit-transition: all 0.6s;
 	    -moz-transition: all 0.6s;
@@ -224,7 +183,7 @@ body {
 	box-sizing: border-box; 
 }
 
-.add-task-form > form > .form-items > .add-task-button {
+.add-task-button {
 	font-size:1.25em;
 	float:left;
 	width:80%;
@@ -236,6 +195,7 @@ body {
 	border-radius:10px;
 	background-color: rgba(0,0,0,0.65);
 	font-family:'Lilita One',sans-serif;
+	outline:none;
 }
 
 .text-feedback {
@@ -362,7 +322,7 @@ body {
 .help-form > .help-items > span {
 	font-family: "Ubuntu", sans-serif;
 	font-weight:300;
-	font-size:1em;
+	font-size:0.9em;
 	line-height:0.75em;
 }
 
@@ -442,4 +402,25 @@ body {
 		-ms-transition: all 0.72s ease-in-out;
 		-o-transition: all 0.72s ease-in-out;
 		transition: all 0.72s ease-in-out;
+}
+
+.button-pressed {
+	/*color:#fff;*/
+	/*background-color:#fff;*/
+	background-color: rgba(255,255,255,0.5);
+
+		-webkit-transition: all 0.03s;
+		-moz-transition: all 0.03s;
+		-ms-transition: all 0.03s;
+		-o-transition: all 0.03s;
+		transition: all 0.03s;
+}
+.hide {
+	opacity:0;
+
+		-webkit-transition: opacity 0.5s;
+		-moz-transition: opacity 0.5s;
+		-ms-transition: opacity 0.5s;
+		-o-transition: opacity 0.5s;
+		transition: opacity 0.5s;
 }

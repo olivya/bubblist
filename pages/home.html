@@ -10,7 +10,7 @@
 			<div class="tasky" id="task{{$index}}">
 
 				<div class="handle" ng-hide="task.editing" id="{{$index}}">
-				<!-- TASK: --> <div ng-hide="task.editing" class="task">{{task.task}}
+				<!-- TASK: --> <div ng-hide="task.editing" class="task hide">{{task.task}}
 					<div class="handle" id="{{$index}}"></div>
 				</div>
 				</div>
@@ -30,8 +30,9 @@
 					</textarea>
 
 					<div class="handle buttons" id="{{$index}}">
-						<!-- SAVE: --><button class="btn" type="submit"><i class="fa fa-check"></i></button>
-						<!-- DELETE: --><button ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
+						<!-- SAVE: --><button type="submit" class="save">Save</button>
+						<!-- DELETE: --><button class="other" ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
+						<!-- CHECKOFF: --><button class="btn other" ng-click="doneTask($index)"><i class="fa fa-check"></i></button>
 			     		<!-- <div class="edit-feedback"></div> -->
 			     	</div>
 		      </form>
@@ -77,8 +78,8 @@
 		<div class="help-items">
 				<span id="main">Planning's a drag . . .</span><p/>
 				<span>Drag tasks to reposition.</span><p/>
-				<span>Double-tap to edit.</span><p/>
-				<span>Press &amp; hold task to bring it to the front.</span><p/>
+				<span>Double-tap to edit, delete, or mark as done.</span><p/>
+				<span>Single-tap to bring task to the front.</span><p/>
 				<span id="main2">. . . literally.</span>
 		</div>
 		<br/>
