@@ -35,28 +35,34 @@ body {
 
 .tasky > form > .buttons > button {
 	position:relative;
-	width:auto;
 	height:30px;
 	float:left;
 	border-width:0px;
 	color:#fff;
 	border-radius:10px;
 	background-color: rgba(0,0,0,0.65);
+	margin-top:3px;
 }
 
 .tasky > form > .buttons > .other {
-	font-size: 1.15em;
+	font-size: .8em;
+	width:28%;
 	float:center;
+	text-align:center;
+	padding:0;
 }
 
 .tasky > form > .buttons > .btn {
 	float:right;
+	padding:0;
+	width:28%;
 }
 
 .tasky > form > .buttons > .save {
 	font-family:'Lilita One',sans-serif;
 	color:#fff;
-	font-size:.9em;
+	font-size:.65em;
+	width:40%;
 	text-transform: uppercase;
 }
 
@@ -331,14 +337,14 @@ body {
 	font-family:'Lilita One',sans-serif;
 	color:#fff;
 	text-transform: uppercase;
-	font-size:1.5em;
+	font-size:1.25em;
 }
 
 .help-form > .help-items > #main2 {
 	font-family:'Lilita One',sans-serif;
 	color:#fff;
 	text-transform: uppercase;
-	font-size:1.5em;
+	font-size:1.25em;
 	float:right;
 }
 
