@@ -1,7 +1,20 @@
-bubblist.controller('mainController', function($scope, Tasks, $location, $timeout) {
+bubblist.controller('mainController', function($scope, Tasks, Colours, $location, $timeout) {
 
-	$scope.message = 'Controller is working!';
+	// $scope.message = 'Task:';
 	$scope.taskList = Tasks.all();
+	$scope.colourList = Colours.all();
+	var i = 0;
+	var colour;
+
+	$( ".colour-test" ).click(function() {
+		if(i < $scope.colourList.length) {
+			colour = $(this).css("background-color",$scope.colourList[i]);
+		} else if (i === $scope.colourList.length) {
+			i=0;
+			colour = $(this).css("background-color",$scope.colourList[i]);
+		}
+		i++;
+	});
 
 	$scope.checkForTasks = function (){
 		if ($scope.taskList.length === 0) {
@@ -36,6 +49,23 @@ bubblist.controller('mainController', function($scope, Tasks, $location, $timeou
 					task:$scope.newTask,
 					editing:false
 				});
+			
+			if(i < $scope.colourList.length) {
+				colour = $($scope.newTask).css("background-color",$scope.colourList[i]);
+				console.log("fired");
+				console.log($scope.newTask.id);
+			}
+			else if (i === $scope.colourList.length) {
+				i=0;
+				colour = $($scope.newTask).css("background-color",$scope.colourList[i]);
+				console.log("fired reset");
+			}
+			i++;
+
+			// $($scope.newTask).css("background-color",$scope.colourList[i]);
+			// i++;
+			console.log($scope.colourList[i]);
+
 			$scope.newTask = "";
 			$scope.checkForTasks();
 			$('.text-feedback').html(maxChars);
@@ -43,6 +73,7 @@ bubblist.controller('mainController', function($scope, Tasks, $location, $timeou
 		else {
 			alert("Please enter your task");
 		}
+		setTimeout($scope.toggleMenu,300);
 		setTimeout($scope.iterateTasks, 5);
 	};
 
@@ -63,12 +94,14 @@ bubblist.controller('mainController', function($scope, Tasks, $location, $timeou
 	mc.on("doubletap", function(ev) {
   	//call the method we attached to the global object 'fooControllerPublic'
   		mainControllerPublic.click(ev.target.id, ev.type);
-  		console.log(ev.target.id);
+  		// console.log(ev.target);
 	});
 
 	mainControllerPublic.click = function(i, eventType) {
    	//$scope.taskList[i].editing = !$scope.taskList[i].editing;
-   	$scope.taskList[i].editing = !$scope.taskList[i].editing;
+   	if($scope.taskList[i] != undefined) {
+   		$scope.taskList[i].editing = !$scope.taskList[i].editing;
+   	}
    	$scope.$apply();
 	}
 	//=============================================================================
@@ -115,4 +148,38 @@ bubblist.controller('mainController', function($scope, Tasks, $location, $timeou
 		$('.text-feedback').html(charsRemaining);
 	});
 	//End character counter tutorial reference
+
+	//TOGGLE MENU + ANIM:
+	var menuOpen = false;
+	var buttonShifted = false;
+
+	$scope.toggleMenu = function (){
+		if(!menuOpen) {
+			$( ".add-task-form" ).addClass( "menu-open" );
+			$( ".toggle-menu-button" ).addClass( "shift-down" );
+			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
+			
+			menuOpen = true;
+			buttonShifted = true;
+
+			setTimeout(function () { if(buttonShifted = true) {
+				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-spin');
+				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-plus').addClass('fa-times');
+			}}, 745);
+		}
+
+		else if(menuOpen) {
+			$( ".add-task-form" ).removeClass( "menu-open" );
+			$( ".toggle-menu-button" ).removeClass( "shift-down" );
+			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
+
+			setTimeout(function () { if(buttonShifted = true) {
+				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-spin');
+				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-times').addClass('fa-plus');
+			}}, 760);
+
+			menuOpen = false;
+			buttonShifted = false;
+		}
+	};
 });

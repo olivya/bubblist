@@ -1,6 +1,8 @@
 <div ng-show="noTasks">
-	You have no tasks yet!
+	<span class="no-tasks-message">You haven't added any tasks!</span>
 </div>
+
+<div class="colour-test"></div>
 
 <div ng-hide="noTasks">
 	<ul class="task-list" ng-repeat="task in taskList track by $index">
@@ -34,22 +36,31 @@
 
 <!-- ADD TASK FORM: -->
 <div class="add-task-form">
-	<span>{{message}}</span></br/>
 	<form name="addTaskForm"
 			ng-submit="addTask()"
 			novalidate>
 
-		<textarea rows="3"
-					 cols="25"
-					 maxlength="100"
-					 class="task-input"
-					 placeholder="Task"
-					 ng-model="newTask"
-					 required>
-		</textarea><br/>
-		<div class="text-feedback"></div>
+		<div class="form-items">
 
-		<input type="submit"
-				 value="Submit"/> 
-	</form>
+			<textarea rows="3"
+						 maxlength="100"
+						 class="task-input"
+						 placeholder="Task"
+						 ng-model="newTask"
+						 required>
+			</textarea><br/>
+			<button class="add-task-button" type="submit">
+				<!-- <i class="fa fa-plus"></i> -->
+				ADD TASK
+			</button>
+			<div class="text-feedback"></div>
+
+		</div>
+
+	</form><br/>
+	
+		<div class="toggle-menu-button" ng-click="toggleMenu()">
+			<i class="fa fa-plus"></i>
+		</div>
+	
 </div>
