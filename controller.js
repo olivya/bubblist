@@ -125,22 +125,7 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	};
 
 	$scope.toggleEditMode = function (i){
-		// if($scope.taskList[i].editing){
-		// 	$('.edit-feedback').html(maxChars - $('.edit-box').val().length);
-		// 	console.log('chars remaining '+charsRemainingEdit);
-		// 	$('.edit-box').keyup(function() {
-		// 		var curCharsEdit = $('.edit-box').val().length;
-		// 		var charsRemainingEdit = maxChars - curCharsEdit;
-		// 		$('.edit-feedback').html(charsRemainingEdit);
-		// 	});
-		// }
-
 		$scope.taskList[i].editing = !$scope.taskList[i].editing;
-		//Begin character counter tutorial reference:
-		//Part 1: http://www.youtube.com/watch?v=13bceSHothY
-		//Part 2: http://www.youtube.com/watch?v=BqcI0N87Xzw
-
-		//End character counter tutorial reference
 	};
 
 	//Begin character counter tutorial reference (again):
@@ -160,10 +145,15 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	var buttonShifted = false;
 
 	$scope.toggleMenu = function (){
+		if(helpMenuOpen){
+			$scope.toggleHelp();
+		}
+
 		if(!menuOpen) {
 			$( ".add-task-form" ).addClass( "menu-open" );
 			$( ".toggle-menu-button" ).addClass( "shift-down" );
 			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
+			$( ".toggle-help-button" ).addClass( "shift-help-down" );
 			
 			menuOpen = true;
 			buttonShifted = true;
@@ -178,6 +168,7 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 			$( ".add-task-form" ).removeClass( "menu-open" );
 			$( ".toggle-menu-button" ).removeClass( "shift-down" );
 			$( ".toggle-menu-button" ).find($(".fa")).addClass('fa-spin');
+			$( ".toggle-help-button" ).removeClass( "shift-help-down" );
 
 			setTimeout(function () { if(buttonShifted = true) {
 				$( ".toggle-menu-button" ).find($(".fa")).removeClass('fa-spin');
@@ -186,6 +177,45 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 
 			menuOpen = false;
 			buttonShifted = false;
+		}
+	};
+
+//TOGGLE HELP + ANIM:
+var helpMenuOpen = false;
+var helpButtonShifted = false;
+
+	$scope.toggleHelp = function (){
+		if(menuOpen){
+			$scope.toggleMenu();
+		}
+
+		if(!helpMenuOpen) {
+			console.log("opening");
+			$( ".help-form" ).addClass( "help-open" );
+			$( ".toggle-help-button" ).addClass( "shift-help" );
+			$( ".toggle-help-button" ).find($(".fa")).addClass('fa-spin');
+			
+			helpMenuOpen = true;
+			helpButtonShifted = true;
+
+			setTimeout(function () { if(helpButtonShifted = true) {
+				$( ".toggle-help-button" ).find($(".fa")).removeClass('fa-spin');
+				$( ".toggle-help-button" ).find($(".fa")).removeClass('fa-question').addClass('fa-times');
+			}}, 745);
+		}
+		else if(helpMenuOpen) {
+			console.log("closing");
+			$( ".help-form" ).removeClass( "help-open" );
+			$( ".toggle-help-button" ).removeClass( "shift-help" );
+			$( ".toggle-help-button" ).find($(".fa")).addClass('fa-spin');
+
+			setTimeout(function () { if(helpButtonShifted = true) {
+				$( ".toggle-help-button" ).find($(".fa")).removeClass('fa-spin');
+				$( ".toggle-help-button" ).find($(".fa")).removeClass('fa-question').addClass('fa-question');
+			}}, 760);
+
+			helpMenuOpen = false;
+			helpButtonShifted = false;
 		}
 	};
 
