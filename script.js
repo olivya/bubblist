@@ -1,7 +1,9 @@
 var bubblist = angular.module('bubblist', ['ngRoute','ngAnimate']);
 
 //=============================================================================
-var mainControllerPublic = {};
+// TOUCH EVENT CONTROLLERS ====================================================
+var doubleTapEdit = {};
+var holdBringForward = {};
 //=============================================================================
 
 bubblist.config(function ($routeProvider,$locationProvider) {

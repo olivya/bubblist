@@ -2,12 +2,12 @@
 	<span class="no-tasks-message">You haven't added any tasks!</span>
 </div>
 
-<div class="colour-test"></div>
+<!-- <div class="colour-test"></div> -->
 
 <div ng-hide="noTasks">
 	<ul class="task-list" ng-repeat="task in taskList track by $index">
 		<li>
-			<div class="tasky">
+			<div class="tasky" id="task{{$index}}">
 				<div class="handle" id="{{$index}}">
 				<!-- TASK: --> <div ng-hide="task.editing" class="task">{{task.task}}</div>
 				</div>

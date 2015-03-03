@@ -5,16 +5,20 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	$scope.colourList = Colours.all();
 	var i = 0;
 	var colour;
+	var colourIndex = 0;
+	var zIndex = 0;
+	var setZ;
+	var holdSetZ;
 
-	$( ".colour-test" ).click(function() {
-		if(i < $scope.colourList.length) {
-			colour = $(this).css("background-color",$scope.colourList[i]);
-		} else if (i === $scope.colourList.length) {
-			i=0;
-			colour = $(this).css("background-color",$scope.colourList[i]);
-		}
-		i++;
-	});
+	// $( ".colour-test" ).click(function() {
+	// 	if(i < $scope.colourList.length) {
+	// 		colour = $(this).css("background-color",$scope.colourList[i]);
+	// 	} else if (i === $scope.colourList.length) {
+	// 		i=0;
+	// 		colour = $(this).css("background-color",$scope.colourList[i]);
+	// 	}
+	// 	i++;
+	// });
 
 	$scope.checkForTasks = function (){
 		if ($scope.taskList.length === 0) {
@@ -47,25 +51,12 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 			$scope.taskList.push(
 				{
 					task:$scope.newTask,
-					editing:false
+					editing:false,
+					index:i
 				});
-			
-			if(i < $scope.colourList.length) {
-				colour = $($scope.newTask).css("background-color",$scope.colourList[i]);
-				console.log("fired");
-				console.log($scope.newTask.id);
-			}
-			else if (i === $scope.colourList.length) {
-				i=0;
-				colour = $($scope.newTask).css("background-color",$scope.colourList[i]);
-				console.log("fired reset");
-			}
-			i++;
 
-			// $($scope.newTask).css("background-color",$scope.colourList[i]);
-			// i++;
-			console.log($scope.colourList[i]);
-
+			// i = $scope.taskList.map(function(i) { return i.i; }).indexOf($scope.newTask);
+			// console.log("i "+i);
 			$scope.newTask = "";
 			$scope.checkForTasks();
 			$('.text-feedback').html(maxChars);
@@ -73,13 +64,34 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		else {
 			alert("Please enter your task");
 		}
-		setTimeout($scope.toggleMenu,300);
+		setTimeout($scope.toggleMenu,100);
 		setTimeout($scope.iterateTasks, 5);
+		setTimeout($scope.setStyle,5);
+	};
+
+	$scope.setStyle = function(){
+		setZ = $('#task'+i).css("z-index",zIndex);
+		// console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
+		zIndex+=10; //NEXT z
+
+		if(colourIndex < $scope.colourList.length) {
+				// console.log("i is "+i); console.log("colourIndex is "+colourIndex);
+			 	colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
+			 	colourIndex++;
+			}
+			else if (colourIndex >= $scope.colourList.length) {
+				colourIndex=0;
+				// console.log("fired reset"); console.log("i is "+i); console.log("colourIndex is "+colourIndex);
+				colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
+				colourIndex++;
+			}
+		i++;
 	};
 
 	//STEP 2: ADD "TASKY" CLASS
 	$scope.iterateTasks = function (){
 		$( "li > div" ).addClass( "tasky" );
+		// console.log("NEXT zIndex is "+zIndex);
 		setTimeout($scope.toggleDraggability, 5);
 	};
 	
@@ -89,19 +101,29 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	//====== HAMMER.JS ============================================================
 	var mc = new Hammer.Manager(document.body);
 	mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+	mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
 
 
 	mc.on("doubletap", function(ev) {
-  	//call the method we attached to the global object 'fooControllerPublic'
-  		mainControllerPublic.click(ev.target.id, ev.type);
-  		// console.log(ev.target);
+		console.log("Double tap detected on handle with id of",ev.target.id);
+  		doubleTapEdit.click(ev.target.id, ev.type);
 	});
 
-	mainControllerPublic.click = function(i, eventType) {
-   	//$scope.taskList[i].editing = !$scope.taskList[i].editing;
+	mc.on("hold", function(ev) {
+		console.log("Hold detected on handle with id of",ev.target.id);
+  		holdBringForward.click(ev.target.id, ev.type);
+	});
+
+	doubleTapEdit.click = function(i, eventType) {
    	if($scope.taskList[i] != undefined) {
    		$scope.taskList[i].editing = !$scope.taskList[i].editing;
    	}
+   	$scope.$apply();
+	}
+
+	holdBringForward.click = function(i, eventType) {
+   	holdSetZ = $('#task'+i).css("z-index",zIndex);
+   	zIndex += 10;
    	$scope.$apply();
 	}
 	//=============================================================================
