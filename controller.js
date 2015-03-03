@@ -3,12 +3,17 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	// $scope.message = 'Task:';
 	$scope.taskList = Tasks.all();
 	$scope.colourList = Colours.all();
+
 	var i = 0;
 	var colour;
 	var colourIndex = 0;
+
 	var zIndex = 0;
 	var setZ;
 	var holdSetZ;
+
+	var space = 0;
+	var increaseSpace;
 
 	// $( ".colour-test" ).click(function() {
 	// 	if(i < $scope.colourList.length) {
@@ -74,6 +79,9 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		// console.log("zIndex is "+zIndex + " and z-index is "+$("#task"+i).css("z-index"));
 		zIndex+=10; //NEXT z
 
+		increaseSpace = $('#task'+i).css("top",space+"px");
+		space += 30; //NEXT top space
+
 		if(colourIndex < $scope.colourList.length) {
 				// console.log("i is "+i); console.log("colourIndex is "+colourIndex);
 			 	colour = $('#task'+i).css("background-color",$scope.colourList[colourIndex]);
@@ -95,41 +103,6 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		setTimeout($scope.toggleDraggability, 5);
 	};
 	
-
-
-	//=============================================================================
-	//====== HAMMER.JS ============================================================
-	var mc = new Hammer.Manager(document.body);
-	mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
-	mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
-
-
-	mc.on("doubletap", function(ev) {
-		console.log("Double tap detected on handle with id of",ev.target.id);
-  		doubleTapEdit.click(ev.target.id, ev.type);
-	});
-
-	mc.on("hold", function(ev) {
-		console.log("Hold detected on handle with id of",ev.target.id);
-  		holdBringForward.click(ev.target.id, ev.type);
-	});
-
-	doubleTapEdit.click = function(i, eventType) {
-   	if($scope.taskList[i] != undefined) {
-   		$scope.taskList[i].editing = !$scope.taskList[i].editing;
-   	}
-   	$scope.$apply();
-	}
-
-	holdBringForward.click = function(i, eventType) {
-   	holdSetZ = $('#task'+i).css("z-index",zIndex);
-   	zIndex += 10;
-   	$scope.$apply();
-	}
-	//=============================================================================
-
-
-
 	//STEP 3: MAKE DRAGGABLE
 	$scope.toggleDraggability = function (){
 		var items = document.querySelectorAll('.tasky');
@@ -204,4 +177,37 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 			buttonShifted = false;
 		}
 	};
+
+	//=============================================================================
+	//====== HAMMER.JS ============================================================
+	var mc = new Hammer.Manager(document.body);
+	mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+	mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
+
+	//DOUBLE TAP to toggle edit mode:
+	mc.on("doubletap", function(ev) {
+		console.log("Double tap detected on handle with id of",ev.target.id);
+		holdBringForward.click(ev.target.id, ev.type);
+  		doubleTapEdit.click(ev.target.id, ev.type);
+	});
+
+	doubleTapEdit.click = function(i, eventType) {
+   	if($scope.taskList[i] != undefined) {
+   		$scope.taskList[i].editing = !$scope.taskList[i].editing;
+   	}
+   	$scope.$apply();
+	}
+
+	//HOLD for 0.75s to bring event to front:
+	mc.on("hold", function(ev) {
+		console.log("Hold detected on handle with id of",ev.target.id);
+  		holdBringForward.click(ev.target.id, ev.type);
+	});
+
+	holdBringForward.click = function(i, eventType) {
+   	holdSetZ = $('#task'+i).css("z-index",zIndex);
+   	zIndex += 10;
+   	$scope.$apply();
+	}
+	//=============================================================================
 });

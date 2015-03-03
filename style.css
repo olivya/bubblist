@@ -20,13 +20,13 @@ body {
 .tasky {
 	position: absolute;
 	left:10;
-	top:10;
+	/*top:10;*/
 /*	background-color:#B5FFFF;
 		-webkit-transition: background-color .5s;
 		-moz-transition: background-color .5s;
 		-o-transition: background-color .5s;
 		transition: background-color .5s;*/
-	padding-top:15px;
+	/*padding-top:15px;*/
 	padding-left:10px;
 	padding-right:10px;
 	border-radius:35%;
@@ -68,6 +68,7 @@ body {
 	margin-left:-3px;
 	float:right;
 }
+
 .tasky.is-dragging {
 	background-color:#FFD1E6;
 		-webkit-transition: background-color .5s;
