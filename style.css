@@ -23,6 +23,7 @@ body {
 	padding-left:10px;
 	padding-right:10px;
 	border-radius:35%;
+	border:1px dotted rgba(0,0,0,0.2);
 	width:130px;
 	height:130px;
 	text-align:center;
@@ -296,7 +297,7 @@ body {
 	padding-bottom:20px;
 	padding-left:10px;
 	top:70px;
-   z-index:100;
+   z-index:10000;
  	border-radius:10px;
 	    -webkit-transition: all 0.6s;
 	    -moz-transition: all 0.6s;

@@ -17,11 +17,26 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 	var space = 0;
 	var increaseSpace;
 
+	// $scope.noTasks = true;
+
 	$scope.checkForTasks = function (){
 		if ($scope.taskList.length === 0) {
 				$scope.noTasks = true;
 			}
 		else $scope.noTasks = false;
+
+		var items = document.querySelectorAll('.tasky');
+
+		// if(items.length === 0) {
+		// 	$scope.noTasks = true;
+		// } else { 
+		//  	for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {
+		//  		if ($scope.taskList[j] != null) { //ensure task[j] hasn't already been deleted (to avoid error)
+		//  			$scope.noTasks = false;
+		//  		} else $scope.noTasks = true;
+		//  	}
+		// };
+
 	};
 
 	$scope.checkForTasks();
@@ -91,14 +106,20 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		setTimeout(function (){
 				$(  ".task"  ).removeClass( "hide" );
 			},200);
-		
+
 		//ensure new task is on top
 		setZ = $('#task'+i).css("z-index",zIndex);
 		zIndex+=10; //NEXT z
 		
 		//ensure new task is not directly over-top of previous
-		increaseSpace = $('#task'+i).css("top",space+"px");
-		space += 40;
+		if(space <= 200) {
+			increaseSpace = $('#task'+i).css("top",space+"px");
+			space += 40;
+		} else {
+			space = 15; //start layering back at top
+			increaseSpace = $('#task'+i).css("top",space+"px");
+			space += 40;
+		}
 
 		//cycle through background colours
 		setTimeout(function (){
@@ -136,8 +157,21 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		};
 	};
 
-	$scope.toggleEditMode = function (i){
+	$scope.toggleEditModeOn = function (i){
+		//check first that nothing else is in edit mode
+		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {	
+			if($scope.taskList[j] != null){
+			 if($scope.taskList[j].editing = true) { //if this task is NOT null
+				$scope.taskList[j].editing = false;
+			}
+		}
+	};
+
 		$scope.taskList[i].editing = !$scope.taskList[i].editing;
+	};
+
+	$scope.toggleEditModeOff = function (i){
+		$scope.taskList[i].editing = false;
 	};
 
 	//Begin character counter tutorial reference (again):
@@ -160,6 +194,14 @@ bubblist.controller('mainController', function($scope, Tasks, Colours, $location
 		if(helpMenuOpen){
 			$scope.toggleHelp();
 		}
+
+		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {	
+			if($scope.taskList[j] != null){
+			 if($scope.taskList[j].editing = true) {
+				$scope.taskList[j].editing = false;
+			}
+		}
+	};
 
 		if(!menuOpen) {
 			menuOpen = true;
@@ -204,6 +246,14 @@ var helpButtonShifted = false;
 			$scope.toggleMenu();
 		}
 
+		for (var j=0, length = $scope.taskList.length; j <= length - 1; j++) {	
+			if($scope.taskList[j] != null){
+			 if($scope.taskList[j].editing = true) { //if this task is NOT null
+				$scope.taskList[j].editing = false;
+			}
+		}
+	};
+
 		if(!helpMenuOpen) {
 			console.log("opening");
 			$( ".help-form" ).addClass( "help-open" );
@@ -238,19 +288,18 @@ var helpButtonShifted = false;
 	//====== HAMMER.JS ============================================================
 	var mc = new Hammer.Manager(document.body);
 	mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
-	// mc.add( new Hammer.Press({ event: 'hold', time: 750 }) );
 	mc.add( new Hammer.Tap({ event: 'tap', taps:1 }) );
 
 	//DOUBLE TAP to toggle edit mode:
 	mc.on("doubletap", function(ev) {
-		console.log("Double tap detected on handle with id of",ev.target.id);
 		doubleTapEdit.click(ev.target.id, ev.type);
 		holdBringForward.click(ev.target.id, ev.type);
 	});
 
 	doubleTapEdit.click = function(i, eventType) {
    	if($scope.taskList[i] != undefined) {
-   		$scope.taskList[i].editing = !$scope.taskList[i].editing;
+   		// $scope.taskList[i].editing = !$scope.taskList[i].editing;
+   		$scope.toggleEditModeOn(i);
    	}
    	$scope.$apply();
 	}
@@ -258,7 +307,6 @@ var helpButtonShifted = false;
 	//HOLD for 0.75s to bring event to front:
 	// mc.on("hold", function(ev) {
 	mc.on("tap", function(ev) {
-		console.log("Tap detected on handle with id of",ev.target.id);
   		holdBringForward.click(ev.target.id, ev.type);
 	});
 

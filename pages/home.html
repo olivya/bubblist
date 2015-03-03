@@ -20,7 +20,7 @@
 				<!-- <button ng-hide="task.editing" ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button> -->
 				
 				<!-- EDITING FORM: -->
-				<form ng-show="task.editing" ng-submit="toggleEditMode($index)" class="handle" id="{{$index}}">
+				<form ng-show="task.editing" ng-submit="toggleEditModeOff($index)" class="handle" id="{{$index}}">
 		      	<textarea rows="4"
 		      				 maxlength="100"
 								 placeholder="Task"
@@ -31,8 +31,8 @@
 
 					<div class="handle buttons" id="{{$index}}">
 						<!-- SAVE: --><button type="submit" class="save">Save</button>
-						<!-- DELETE: --><button class="other" ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
-						<!-- CHECKOFF: --><button class="btn other" ng-click="doneTask($index)"><i class="fa fa-check"></i></button>
+						<!-- DELETE: --><button id="delete" class="other" ng-click="deleteTask($index)"><i class="fa fa-trash"></i></button>
+						<!-- CHECKOFF: --><button id="done" class="btn other" ng-click="doneTask($index)"><i class="fa fa-check"></i></button>
 			     		<!-- <div class="edit-feedback"></div> -->
 			     	</div>
 		      </form>
